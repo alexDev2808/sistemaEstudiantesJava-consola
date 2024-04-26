@@ -1,5 +1,6 @@
 package jath.conexion;
-import jath.env.Variables;
+import jath.variables.Variables;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
