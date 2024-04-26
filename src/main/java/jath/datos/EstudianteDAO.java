@@ -139,6 +139,31 @@ public class EstudianteDAO {
         return false;
     }
 
+    public boolean eliminarEstudiante(Estudiante estudiante) {
+
+        PreparedStatement ps;
+        Connection conn = getConexion();
+        String sql = "DELETE FROM estudiante WHERE id_estudiante = ?";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, estudiante.getIdEstudiante());
+            ps.execute();
+            return true;
+
+        } catch (Exception e){
+            System.out.println("Error al eliminar estudiante: " + e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e){
+                System.out.println("Error al cerrar conexion: " + e.getMessage());
+            }
+        }
+
+        return false;
+    }
+
     public static void main(String[] args) {
         EstudianteDAO estudianteDAO = new EstudianteDAO();
 
@@ -152,15 +177,25 @@ public class EstudianteDAO {
 //            System.out.println("No se agrego estudiante: " + nuevoEstudiante);
 //        }
 
-        
-        //modificar
-        var modificarEstudiante = new Estudiante(1, "J. Alexis", "Tenorio", "2461765663", "alexis@test.com");
-        var modificado = estudianteDAO.modificarEstudiante(modificarEstudiante);
 
-        if(modificado) {
-            System.out.println("Estudiante modificado: " + modificarEstudiante);
+        //modificar
+//        var modificarEstudiante = new Estudiante(1, "J. Alexis", "Tenorio", "2461765663", "alexis@test.com");
+//        var modificado = estudianteDAO.modificarEstudiante(modificarEstudiante);
+//
+//        if(modificado) {
+//            System.out.println("Estudiante modificado: " + modificarEstudiante);
+//        } else {
+//            System.out.println("No se pudo modificar: " + modificarEstudiante);
+//        }
+
+        //eliminar
+        var eliminarEstudiante = new Estudiante(1);
+        var eliminado = estudianteDAO.eliminarEstudiante(eliminarEstudiante);
+
+        if(eliminado){
+            System.out.println("Estudiante eliminado: " + eliminarEstudiante);
         } else {
-            System.out.println("No se pudo modificar: " + modificarEstudiante);
+            System.out.println("No se pudo eliminar: " + estudianteDAO);
         }
 
         //listar
