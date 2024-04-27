@@ -80,6 +80,38 @@ public class EstudianteDAO {
         return false;
     }
 
+    public boolean buscarEstudiantePorNombre(Estudiante estudiante) {
+        PreparedStatement ps;
+        ResultSet rs;
+        Connection conn = getConexion();
+        String sql = "SELECT * FROM estudiante WHERE (nombre LIKE ?) ORDER BY nombre";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + estudiante.getNombre() + "%");
+            rs = ps.executeQuery();
+
+            if(rs.next()) {
+                estudiante.setNombre(rs.getString("nombre"));
+                estudiante.setApellidos(rs.getString("apellidos"));
+                estudiante.setTelefono(rs.getString("telefono"));
+                estudiante.setEmail(rs.getString("email"));
+
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Ocurrio un error al buscar estudiante: " + e.getMessage());
+        } finally {
+            try {
+                conn.close();
+            } catch (Exception e) {
+                System.out.println("Ocurrio un error al cerrar conexion: " + e.getMessage());
+            }
+        }
+
+        return false;
+    }
+
     public boolean agregarEstudiante(Estudiante estudiante) {
         PreparedStatement ps;
         Connection conn = getConexion();

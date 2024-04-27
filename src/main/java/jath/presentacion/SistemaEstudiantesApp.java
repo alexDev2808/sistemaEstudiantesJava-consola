@@ -119,15 +119,42 @@ public class SistemaEstudiantesApp {
     }
 
     public static void buscarEstudiante(Scanner consola, EstudianteDAO estudianteDAO){
-        System.out.print("Ingresa el idEstudiante a buscar: ");
-        int idEstudiante = Integer.parseInt(consola.nextLine());
-        var buscarEstudiante = new Estudiante(idEstudiante);
-        boolean encontrado = estudianteDAO.buscarEstudiantePorId(buscarEstudiante);
 
-        if (encontrado) {
-            System.out.println("Estudiante encontrado: " + buscarEstudiante);
+        System.out.print("Deseas buscar Por ID o Nombre: ");
+        String opcionBuscar = consola.nextLine();
+
+        while (!(opcionBuscar.equalsIgnoreCase("id") || opcionBuscar.equalsIgnoreCase("nombre"))) {
+            System.out.println("Opcion incorrecta, intenta de nuevo: ");
+            System.out.print("Deseas buscar Por ID o Nombre: ");
+            opcionBuscar = consola.nextLine();
+        }
+
+        if(opcionBuscar.equalsIgnoreCase("id")){
+
+            System.out.print("Ingresa el idEstudiante a buscar: ");
+            int idEstudiante = Integer.parseInt(consola.nextLine());
+            var buscarEstudiante = new Estudiante(idEstudiante);
+            boolean encontrado = estudianteDAO.buscarEstudiantePorId(buscarEstudiante);
+
+            if (encontrado) {
+                System.out.println("Estudiante encontrado: " + buscarEstudiante);
+            } else {
+                System.out.println("No se encontro estudiante :(, intenta de nuevo");
+            }
+
         } else {
-            System.out.println("No se encontro estudiante :(, intenta de nuevo");
+
+            System.out.print("Ingresa el nombre del Estudiante: ");
+            String nombreEstudiante = consola.nextLine();
+            Estudiante buscarEstudianteNombre = new Estudiante(nombreEstudiante);
+            boolean encontrado = estudianteDAO.buscarEstudiantePorNombre(buscarEstudianteNombre);
+
+            if (encontrado) {
+                System.out.println("Estudiante encontrado: " + buscarEstudianteNombre);
+            } else {
+                System.out.println("No se encontro estudiante :(, intenta de nuevo");
+            }
+
         }
     }
 
@@ -144,6 +171,6 @@ public class SistemaEstudiantesApp {
                 
                 #############################
                 """);
-        System.out.print("Elige una opcion: ");
+        System.out.print("Elige una 'opcion': ");
     }
 }

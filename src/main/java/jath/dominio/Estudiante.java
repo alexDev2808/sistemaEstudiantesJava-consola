@@ -13,6 +13,10 @@ public class Estudiante {
         this.idEstudiante = idEstudiante;
     }
 
+    public Estudiante(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Estudiante(String nombre, String apellidos, String telefono, String email) {
         this.nombre = nombre;
         this.apellidos = apellidos;
